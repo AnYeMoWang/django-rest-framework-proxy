@@ -154,6 +154,9 @@ class ProxyView(BaseProxyView):
         data = self.get_request_data(request)
         files = self.get_request_files(request)
         headers = self.get_headers(request)
+        content_type = headers.get('Content-Type', '')
+        if 'multipart/form-data' in content_type:
+            headers.pop('Content-Type')
         verify_ssl = self.get_verify_ssl(request)
         cookies = self.get_cookies(request)
 
