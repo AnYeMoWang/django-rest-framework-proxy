@@ -19,6 +19,7 @@ from rest_framework_proxy.utils import StreamingMultipart, generate_boundary
 
 class BaseProxyView(APIView):
     proxy_settings = api_proxy_settings
+    proxy_auth = None
     proxy_host = None
     source = None
     return_raw = False
@@ -84,14 +85,15 @@ class ProxyView(BaseProxyView):
         for old, new in accept_maps.items():
             headers['Accept'] = headers['Accept'].replace(old, new)
 
-        username = self.proxy_settings.AUTH.get('user')
-        password = self.proxy_settings.AUTH.get('password')
+        proxy_auth = self.proxy_auth if self.proxy_auth else self.proxy_settings.AUTH
+        username = proxy_auth.get('user')
+        password = proxy_auth.get('password')
         if username and password:
             auth_token = '%s:%s' % (username, password)
             auth_token = base64.b64encode(auth_token.encode('utf-8')).decode()
             headers['Authorization'] = 'Basic %s' % auth_token
         else:
-            auth_token = self.proxy_settings.AUTH.get('token')
+            auth_token = proxy_auth.get('token')
             if auth_token:
                 headers['Authorization'] = auth_token
         return headers
