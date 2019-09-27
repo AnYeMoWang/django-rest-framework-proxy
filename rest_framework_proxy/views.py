@@ -156,6 +156,8 @@ class ProxyView(BaseProxyView):
         data = self.get_request_data(request)
         files = self.get_request_files(request)
         headers = self.get_headers(request)
+        if not request.user.is_anonymous:
+            headers['X-USER-MAIL'] = request.user.email
         content_type = headers.get('Content-Type', '')
         if 'multipart/form-data' in content_type:
             headers.pop('Content-Type')
