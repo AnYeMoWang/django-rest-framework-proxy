@@ -43,7 +43,7 @@ class ProxyView(BaseProxyView):
         path = self.get_source_path()
         if path:
             return '/'.join([host, path])
-        return host
+        return host if host.endswith('/') else host + '/'
 
     def get_request_params(self, request):
         if request.query_params:
