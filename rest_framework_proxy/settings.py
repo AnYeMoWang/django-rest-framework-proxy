@@ -15,7 +15,7 @@ DEFAULTS = {
     'TIMEOUT': None,
     'DEFAULT_HTTP_ACCEPT': 'application/json',
     'DEFAULT_HTTP_ACCEPT_LANGUAGE': 'en-US,en;q=0.8',
-    'DEFAULT_CONTENT_TYPE': 'text/plain',
+    'DEFAULT_CONTENT_TYPE': 'application/json',
 
     # Return response as-is if enabled
     'RETURN_RAW': False,
